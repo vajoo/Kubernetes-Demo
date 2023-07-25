@@ -33,6 +33,7 @@
 - https://minikube.sigs.k8s.io/docs/start/ -> Tutorial and download
 - start with: minikube start --driver docker
 - check status with: minikube status
+- open dashboard with: minikube dashboard
 - continue with kubectl
 - get info of nodes in cluster with: kubectl get node
 
@@ -43,3 +44,6 @@
 - get all pods with: kubectl get pod
 - view logs with: kubectl logs <pod-name> -> stream logs with -f at the end
 - get ip to access the node with: minikube ip or kubectl get node -o wide
+
+- stop the cluster with: minikube stop
+- check it with: minikube status
