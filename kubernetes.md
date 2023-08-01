@@ -75,7 +75,11 @@
 - connect to cluster with: minikube ssh
 - docker ps
 - filter for nginx: docker ps | grep nginx
-- connect to container with: docker exec -it <ID> sh
+- run a command on a container in a pod with: kubectl exec <podname> <command>
+- print the logs of a container with: kubectl logs <podname> <containername>
+
+### Connect to a container in a pod
+- docker exec -it <ID> sh
 - check hostname and ip with: hostname and hostname -i
 - curl <IP>
 - get IP adress of the pod with: kubectl get pods -o wide
