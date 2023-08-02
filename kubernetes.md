@@ -110,8 +110,18 @@ when the command "kubectl get pods" is typed in a list of pods will appear. The 
 
 now the containers are accessable inside the nodes
 
-### Services: Connect to Container outside the pods
+### Create Servie of type ClusterIP to connect to a Container inside the node
 - create a service for a deployment with: kubectl expose deployment nginx-deployment --port=8080 --target-port=80
+
+### Create Service of type NodeIP to connect to a Container inside the node
+- kubectl expose deployment nginx-deployment --port=8080 --type=NodePort -> so you can access the cluster with the ip of the node outside the node
+- test this quickly with: minikube service k8s-web-hello or add --url to just get the url
+
+### Create Service of type LoadBalancer
+- kubectl expose deployment k8s-web-hello --type=LoadBalancer --port=3000
+- external IP is the loadbalancer if the cluster is deployed in the cloud. In the minikube application it´s empty
+
+### Services generally
 - check the service with: kubectl get services
 - get infos with: kubectl describe services
 
@@ -125,3 +135,9 @@ the ip of the deployment is just accessable inside the cluster -> check this wit
 
 ### Delete service
 - kubectl delete service nginx-deployment
+
+### the process
+- create deployment
+- create service
+- check if everything worked -> connect to container and curl the ip:port
+- scale deployment
