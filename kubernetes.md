@@ -47,6 +47,7 @@
 - get service list with: kubectl get service
 - get external ip to connect with: minikube service <service-name> --url
 
+## Stop cluster
 - stop the cluster with: minikube stop
 - check it with: minikube status
 
@@ -88,6 +89,7 @@ the ip is the internal ip of the virtual maschine and the container is not acces
 
 ### Deleting the pod
 - kubectl delete pod nginx
+-> if the replicas in a deployment is set to 4 for example and one pod is deleted it will automatically create a new pod
 - check if it is deleted with kubectl get pods
 
 ### Creating and exploring deployment
@@ -115,7 +117,7 @@ now the containers are accessable inside the nodes
 
 ### Create Service of type NodeIP to connect to a Container inside the node
 - kubectl expose deployment nginx-deployment --port=8080 --type=NodePort -> so you can access the cluster with the ip of the node outside the node
-- test this quickly with: minikube service k8s-web-hello or add --url to just get the url
+- test this quickly with: minikube service k8s-web-hello --url to just get the url
 
 ### Create Service of type LoadBalancer
 - kubectl expose deployment k8s-web-hello --type=LoadBalancer --port=3000
@@ -136,8 +138,36 @@ the ip of the deployment is just accessable inside the cluster -> check this wit
 ### Delete service
 - kubectl delete service nginx-deployment
 
+### Delete all
+- kubectl delete all --all
+
 ### the process
 - create deployment
 - create service
 - check if everything worked -> connect to container and curl the ip:port
 - scale deployment
+- check scaling with: kubectl get pods -o wide
+
+### Update image in deployment
+- see the update type: kubectl describe deployment k8s-web-hello
+- update the image: docker build . -t vajo/k8s-web-hello:2.0.0
+- push the image: docker push vajo/k8s-web-hello:2.0.0
+- update image in deployment cluster: kubectl set image deployment k8s-web-hello k8s-web-hello=vajo/k8s-web-hello:2.0.0
+- view status of rollout: kubectl rollout status deploy k8s-web-hello
+
+## YML config
+
+### create deployment
+- create yml file with config
+- apply the deployment with: kubectl apply -f deployment.yml
+- to update the config just enter the command again
+
+### create service
+- create another yml file for service
+- apply the service with: kubectl apply -f service.yml
+
+### create service and deployment in one file
+- just seperate the two parts with a '---' separator-line
+
+### delete deployment and service
+- kubectl delete -f deployment.yml -f service.yml
